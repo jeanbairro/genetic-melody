@@ -2,6 +2,7 @@
 using Melanchall.DryWetMidi.Smf;
 using Melanchall.DryWetMidi.Smf.Interaction;
 using Melanchall.DryWetMidi.Tools;
+using System;
 using System.Linq;
 
 namespace GeneticMelody
@@ -14,34 +15,35 @@ namespace GeneticMelody
 
             var differentNotes = midiFile.GetNotes().GroupBy(x => x.NoteName);
 
+            differentNotes.ToList().ForEach(n => Console.WriteLine(n.Key));
+
+            Print(midiFile);
+
             var tempoMap = midiFile.GetTempoMap();
 
-            //var timedEvents = midiFile.GetTimedEvents();
+            midiFile.QuantizeTimedEvents(new SteppedGrid(new BarBeatTimeSpan(1, tempoMap.TimeSignature.First().Value.Numerator, 8)), null);
 
-            //var teste = midiFile.SplitByNotes();
+            Print(midiFile);
 
-            var notesAndRests = midiFile.GetTrackChunks().Last().GetNotes().GetNotesAndRests(RestSeparationPolicy.NoSeparation); 
+            Console.ReadKey();
+        }
 
-            var metricTime = TimeConverter.ConvertTo<MetricTimeSpan>(8, tempoMap);
+        static void Print(MidiFile midiFile)
+        {
+            var midiMeasures = midiFile.SplitByGrid(new SteppedGrid(new BarBeatTimeSpan(1, 0, 0)));
 
-            var barBeatTimeFromMetric = TimeConverter.ConvertTo<BarBeatTimeSpan>(metricTime, tempoMap);
-            
-            var teste = notesAndRests.AtTime(MusicalTimeSpan.Quarter, tempoMap);
+            Console.WriteLine("-----------------------início----------------------");
 
-            //midiFile.SplitNotesByGrid(new SteppedGrid());
+            var i = 1;
 
-            var newFiles = midiFile.SplitByGrid(new SteppedGrid(new BarBeatTimeSpan(1, 0, 0)));
-
-            var i = 0;
-
-            foreach (var midi in newFiles)
+            foreach (var midiMeasure in midiMeasures)
             {
-                //midi.
-                //midi.Write($@"MIDI Files\Teste{i}.mid");
+                Console.WriteLine($"Measure {i}");
+                var notesAndRests = midiMeasure.GetTrackChunks().Last().GetNotes().GetNotesAndRests(RestSeparationPolicy.NoSeparation);
+                notesAndRests.ToList().ForEach(e => Console.WriteLine($"Event: {e.ToString()}, Time: {e.Time}, Length: {e.Length}"));
+                Console.WriteLine("---------------------------------------------------");
                 i++;
             }
-
-            //System.Console.ReadKey();
         }
     }
 }
