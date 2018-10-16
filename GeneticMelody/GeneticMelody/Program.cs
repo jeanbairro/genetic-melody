@@ -1,8 +1,12 @@
-﻿using Melanchall.DryWetMidi.MusicTheory;
+﻿using GeneticMelody.Converter;
+using GeneticMelody.Genetic.Domain;
+using GeneticMelody.Genetic.GeneticOperators.Initializer;
+using Melanchall.DryWetMidi.MusicTheory;
 using Melanchall.DryWetMidi.Smf;
 using Melanchall.DryWetMidi.Smf.Interaction;
 using Melanchall.DryWetMidi.Tools;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace GeneticMelody
@@ -11,39 +15,17 @@ namespace GeneticMelody
     {
         static void Main(string[] args)
         {
-            var midiFile = MidiFile.Read(@"MIDI Files\Parabéns a Você.mid");
+            var midiFile = MidiFile.Read(@"Files\teste.mid");
 
-            var differentNotes = midiFile.GetNotes().GroupBy(x => x.NoteName);
+            var converter = new MidiConverter();
 
-            differentNotes.ToList().ForEach(n => Console.WriteLine(n.Key));
+            var initializer = new RandomInitializer(converter.MidiToMelody(midiFile));
 
-            Print(midiFile);
+            var firstPopulation = initializer.Initialize();
 
-            var tempoMap = midiFile.GetTempoMap();
-
-            midiFile.QuantizeTimedEvents(new SteppedGrid(new BarBeatTimeSpan(1, tempoMap.TimeSignature.First().Value.Numerator, 8)), null);
-
-            Print(midiFile);
+            firstPopulation.BestIndividual();
 
             Console.ReadKey();
-        }
-
-        static void Print(MidiFile midiFile)
-        {
-            var midiMeasures = midiFile.SplitByGrid(new SteppedGrid(new BarBeatTimeSpan(1, 0, 0)));
-
-            Console.WriteLine("-----------------------início----------------------");
-
-            var i = 1;
-
-            foreach (var midiMeasure in midiMeasures)
-            {
-                Console.WriteLine($"Measure {i}");
-                var notesAndRests = midiMeasure.GetTrackChunks().Last().GetNotes().GetNotesAndRests(RestSeparationPolicy.NoSeparation);
-                notesAndRests.ToList().ForEach(e => Console.WriteLine($"Event: {e.ToString()}, Time: {e.Time}, Length: {e.Length}"));
-                Console.WriteLine("---------------------------------------------------");
-                i++;
-            }
         }
     }
 }

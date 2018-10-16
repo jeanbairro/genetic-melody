@@ -45,6 +45,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter\MidiConverter.cs" />
+    <Compile Include="Converter\RestOrPed.cs" />
+    <Compile Include="Genetic\Domain\Interfaces\IIndividual.cs" />
+    <Compile Include="Genetic\Domain\Interfaces\IPopulation.cs" />
+    <Compile Include="Genetic\GeneticOperators\Initializer\IInitializer.cs" />
+    <Compile Include="Genetic\GeneticOperators\Initializer\RandomInitializer.cs" />
+    <Compile Include="Genetic\Util\GeneticMelodyConstants.cs" />
+    <Compile Include="Genetic\Domain\Event.cs" />
+    <Compile Include="Genetic\Domain\Measure.cs" />
+    <Compile Include="Genetic\Domain\Melody.cs" />
+    <Compile Include="Genetic\Domain\Note.cs" />
+    <Compile Include="Genetic\Domain\Tie.cs" />
+    <Compile Include="Genetic\Domain\Population.cs" />
+    <Compile Include="Genetic\Domain\Rest.cs" />
+    <Compile Include="Genetic\FitnessCalculators\ISimilarityFitnessCalculator.cs" />
+    <Compile Include="Genetic\FitnessCalculators\MeasureSimilarityFitnessCalculator.cs" />
+    <Compile Include="Genetic\FitnessCalculators\MelodySimilarityFitnessCalculator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,9 +70,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MIDI Files\Parabéns a Você.mid">
+    <Content Include="Files\Parabéns a Você.mid">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\teste.mid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
