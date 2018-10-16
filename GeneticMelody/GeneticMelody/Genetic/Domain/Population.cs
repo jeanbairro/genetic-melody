@@ -1,12 +1,10 @@
-﻿using GeneticMelody.Genetic.Domain.Interfaces;
+﻿using GeneticMelody.Util;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using GeneticMelody.Util;
 
 namespace GeneticMelody.Genetic.Domain
 {
-    public class Population : IPopulation
+    public class Population
     {
         public Population()
         {
@@ -17,7 +15,7 @@ namespace GeneticMelody.Genetic.Domain
 
         public static int Limit => GeneticMelodyConstants.POPULATION_LIMIT;
 
-        public IIndividual BestIndividual()
+        public Melody BestIndividual()
         {
             return Individuals.OrderByDescending(i => i.Fitness).FirstOrDefault();
         }

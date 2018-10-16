@@ -1,9 +1,9 @@
-﻿using GeneticMelody.Genetic.Domain.Interfaces;
+﻿using GeneticMelody.Genetic.Domain;
 
 namespace GeneticMelody.Genetic.GeneticOperators.Initializer
 {
     public interface IInitializer
     {
-        IPopulation Initialize();
+        Population Initialize();
     }
 }

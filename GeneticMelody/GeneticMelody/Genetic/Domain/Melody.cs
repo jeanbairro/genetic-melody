@@ -1,11 +1,10 @@
-﻿using GeneticMelody.Genetic.Domain.Interfaces;
-using Melanchall.DryWetMidi.Smf.Interaction;
+﻿using Melanchall.DryWetMidi.Smf.Interaction;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GeneticMelody.Genetic
 {
-    public class Melody : IIndividual
+    public class Melody
     {
         public Melody(ICollection<Measure> measures, TempoMap tempoMap)
         {

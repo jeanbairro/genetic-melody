@@ -1,8 +1,7 @@
-﻿using System;
-using GeneticMelody.Genetic.Domain.Interfaces;
-using System.Linq;
-using GeneticMelody.Genetic.Domain;
+﻿using GeneticMelody.Genetic.Domain;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GeneticMelody.Genetic.GeneticOperators.Initializer
 {
@@ -15,7 +14,7 @@ namespace GeneticMelody.Genetic.GeneticOperators.Initializer
 
         public Melody BaseMelody { get; set; }
 
-        public IPopulation Initialize()
+        public Population Initialize()
         {
             var population = new Population();
 
