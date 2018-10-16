@@ -19,7 +19,7 @@ namespace GeneticMelody.Genetic
 
         public ICollection<Measure> Measures { get; set; }
 
-        public double PichVariety => 
+        public double PichVariety =>
             Measures.SelectMany(m => m.Events).OfType<Note>().GroupBy(note => note.Number).Count() /
             Measures.SelectMany(m => m.Events).OfType<Note>().Count();
 
@@ -29,8 +29,8 @@ namespace GeneticMelody.Genetic
             Measures.SelectMany(m => m.Events).OfType<Note>().Count() /
             Measures.SelectMany(m => m.Events).Count();
 
-        public double RestDensity => 
-            Measures.SelectMany(m => m.Events).OfType<Rest>().Count() / 
+        public double RestDensity =>
+            Measures.SelectMany(m => m.Events).OfType<Rest>().Count() /
             Measures.SelectMany(m => m.Events).Count();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace GeneticMelody.Genetic.FitnessCalculators
 {
-    interface ISimilarityFitnessCalculator
+    internal interface ISimilarityFitnessCalculator
     {
         double Calculate(Melody originalMelody, Melody currentMelody);
     }

@@ -4,7 +4,6 @@
     {
         public Tie(int number) : base(number)
         {
-
         }
     }
 }

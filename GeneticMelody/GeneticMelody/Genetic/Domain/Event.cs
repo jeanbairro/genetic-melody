@@ -4,7 +4,6 @@
     {
         public Event()
         {
-
         }
 
         public Event(int number)
