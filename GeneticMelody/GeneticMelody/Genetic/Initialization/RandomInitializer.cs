@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeneticMelody.Genetic.GeneticOperators.Initializer
+namespace GeneticMelody.Genetic.Initialization
 {
-    public class RandomInitializer : IInitializer
+    public class RandomInitializer : IInitializazer
     {
         public RandomInitializer(Melody melody)
         {

@@ -48,8 +48,8 @@
     <Compile Include="Converter\MidiConverter.cs" />
     <Compile Include="Converter\RestOrPed.cs" />
     <Compile Include="Genetic\Domain\Solver.cs" />
-    <Compile Include="Genetic\GeneticOperators\Initializer\IInitializer.cs" />
-    <Compile Include="Genetic\GeneticOperators\Initializer\RandomInitializer.cs" />
+    <Compile Include="Genetic\GeneticOperators\Initialization\IInitializationOperator.cs" />
+    <Compile Include="Genetic\GeneticOperators\Initialization\RandomInitializer.cs" />
     <Compile Include="Genetic\Util\GeneticMelodyConstants.cs" />
     <Compile Include="Genetic\Domain\Event.cs" />
     <Compile Include="Genetic\Domain\Measure.cs" />
@@ -76,6 +76,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Genetic\GeneticOperators\Crossover\" />
+    <Folder Include="Genetic\GeneticOperators\Mutation\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

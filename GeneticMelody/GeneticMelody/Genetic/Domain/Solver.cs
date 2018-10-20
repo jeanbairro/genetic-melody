@@ -1,5 +1,5 @@
 ﻿using GeneticMelody.Converter;
-using GeneticMelody.Genetic.GeneticOperators.Initializer;
+using GeneticMelody.Genetic.Initialization;
 using Melanchall.DryWetMidi.Smf;
 using System.Collections.Generic;
 
