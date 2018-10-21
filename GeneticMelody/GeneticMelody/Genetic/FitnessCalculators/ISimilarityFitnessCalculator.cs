@@ -1,7 +1,7 @@
 ﻿namespace GeneticMelody.Genetic.FitnessCalculators
 {
-    internal interface ISimilarityFitnessCalculator
+    public interface ISimilarityFitnessCalculator
     {
-        double Calculate(Melody originalMelody, Melody currentMelody);
+        void Calculate(Melody originalMelody, Melody currentMelody);
     }
 }

@@ -1,29 +1,49 @@
 ﻿using GeneticMelody.Converter;
+using GeneticMelody.Genetic.Crossover;
+using GeneticMelody.Genetic.FitnessCalculators;
 using GeneticMelody.Genetic.Initialization;
+using GeneticMelody.Genetic.Replacement;
+using GeneticMelody.Genetic.Selection;
+using GeneticMelody.Genetic.StoppingCriterion;
+using GeneticMelody.Util;
 using Melanchall.DryWetMidi.Smf;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GeneticMelody.Genetic.Domain
 {
     public class Solver
     {
+        private readonly ICrossoverOperator _crossoverOperator;
+        private readonly ISimilarityFitnessCalculator _fitnessCalculator;
+        private readonly IInitializazer _initializer;
+        private readonly IReplacementOperator _replacementOperator;
+        private readonly ISelector _selector;
+        private readonly IStoppingCriterionChecker _stopChecker;
         public ICollection<Population> Generations { get; set; }
 
-        public MidiFile Solve(MidiFile midiFile)
+        public Solver(ICrossoverOperator crossoverOperator, ISimilarityFitnessCalculator fitnessCalculator, IInitializazer initializer, IReplacementOperator replacementOperator, ISelector selector, IStoppingCriterionChecker stopChecker)
         {
-            var converter = new MidiConverter();
+            _crossoverOperator = crossoverOperator;
+            _initializer = initializer;
+            _replacementOperator = replacementOperator;
+            _selector = selector;
+            _stopChecker = stopChecker;
+        }
 
-            var initializer = new RandomInitializer(converter.MidiToMelody(midiFile));
+        public MidiFile Solve()
+        {
+            var currentPopulation = _initializer.Initialize();
+            /*aplicar operadores de mutação*/
+            currentPopulation.Individuals.ToList().ForEach(currentMelody => _fitnessCalculator.Calculate(_initializer.BaseMelody, currentMelody));
+            Generations.Add(currentPopulation);
 
-            var genesisPopulation = initializer.Initialize();
-
-            /*aplicar operadores geneticos*/
-
-            Generations.Add(genesisPopulation);
-
-            while (/*criterio de parada não for atingido*/2 == 1)
+            while (!_stopChecker.Stop(this))
             {
-                /*dale o*/
+                var newPopulation = _replacementOperator.Replace(currentPopulation);
+                newPopulation.Individuals.ToList().ForEach(currentMelody => _fitnessCalculator.Calculate(_initializer.BaseMelody, currentMelody));
+                Generations.Add(newPopulation);
+                currentPopulation = newPopulation;
             }
 
             return new MidiFile();

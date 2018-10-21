@@ -1,10 +1,11 @@
 ﻿using GeneticMelody.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GeneticMelody.Genetic.Domain
 {
-    public class Population
+    public class Population : ICloneable
     {
         public Population()
         {
@@ -18,6 +19,11 @@ namespace GeneticMelody.Genetic.Domain
         public Melody BestIndividual()
         {
             return Individuals.OrderByDescending(i => i.Fitness).FirstOrDefault();
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

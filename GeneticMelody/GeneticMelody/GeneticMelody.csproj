@@ -47,9 +47,18 @@
   <ItemGroup>
     <Compile Include="Converter\MidiConverter.cs" />
     <Compile Include="Converter\RestOrPed.cs" />
+    <Compile Include="Genetic\Crossover\ICrossoverOperator.cs" />
+    <Compile Include="Genetic\Crossover\RandomCutOffGeneticOperator.cs" />
+    <Compile Include="Genetic\Domain\IIndividual.cs" />
     <Compile Include="Genetic\Domain\Solver.cs" />
-    <Compile Include="Genetic\GeneticOperators\Initialization\IInitializationOperator.cs" />
-    <Compile Include="Genetic\GeneticOperators\Initialization\RandomInitializer.cs" />
+    <Compile Include="Genetic\Initialization\IInitializer.cs" />
+    <Compile Include="Genetic\Initialization\RandomInitializer.cs" />
+    <Compile Include="Genetic\Replacement\HalfReplacementOperator.cs" />
+    <Compile Include="Genetic\Replacement\IReplacementOperator.cs" />
+    <Compile Include="Genetic\Selection\ISelector.cs" />
+    <Compile Include="Genetic\Selection\TournamentSelector.cs" />
+    <Compile Include="Genetic\StoppingCriterion\IStoppingCriterionChecker.cs" />
+    <Compile Include="Genetic\StoppingCriterion\MultipleStoppingCriterionChecker.cs" />
     <Compile Include="Genetic\Util\GeneticMelodyConstants.cs" />
     <Compile Include="Genetic\Domain\Event.cs" />
     <Compile Include="Genetic\Domain\Measure.cs" />
@@ -77,8 +86,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Genetic\GeneticOperators\Crossover\" />
-    <Folder Include="Genetic\GeneticOperators\Mutation\" />
+    <Folder Include="Genetic\Mutation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
