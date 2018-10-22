@@ -24,7 +24,7 @@ namespace GeneticMelody.Converter
             var measures = new List<Measure>();
             foreach (var midiMeasure in midiMeasures)
             {
-                measures.Add(MidiToMeasure(midiMeasure, ticksPerEvent));
+                measures.Add(MidiToMeasure(midiMeasure, measures.Count, ticksPerEvent));
             }
 
             return new Melody(measures, tempoMap.Clone());
@@ -37,7 +37,7 @@ namespace GeneticMelody.Converter
             return midiFile.SplitByGrid(grid, new SplittingMidiFileByGridSettings { RemoveEmptyFiles = true }).ToList();
         }
 
-        private Measure MidiToMeasure(MidiFile midiMeasure, int ticksPerEvent)
+        private Measure MidiToMeasure(MidiFile midiMeasure, int measureOrder, int ticksPerEvent)
         {
             var notesAndRests = midiMeasure.GetTrackChunks().Last().GetNotes().GetNotesAndRests(RestSeparationPolicy.NoSeparation);
             var measureTotalTicks = ticksPerEvent * Measure.SizeOfMeasure;
@@ -61,7 +61,7 @@ namespace GeneticMelody.Converter
                 ticks += ticksPerEvent;
             }
 
-            return new Measure(events);
+            return new Measure(events, measureOrder);
         }
 
         private Event LengthedToEvent(ILengthedObject lengthed)

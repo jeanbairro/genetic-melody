@@ -6,21 +6,18 @@ namespace GeneticMelody.Genetic
 {
     public class Measure
     {
-        public Measure(ICollection<Event> events)
+        public Measure(IList<Event> events, int order)
         {
             Events = events;
+            InitialOrder = order;
         }
 
-        public ICollection<Event> Events { get; set; }
-
         public static int SizeOfMeasure => GeneticMelodyConstants.SIZE_OF_MEASURE;
-
-        public double PichVariety => Events.OfType<Note>().GroupBy(note => note.Number).Count() / Events.OfType<Note>().Count();
-
         public double DifferentIntervals => 0d;
-
+        public IList<Event> Events { get; set; }
         public double NoteDensity => Events.OfType<Note>().Count() / Events.Count();
-
+        public int InitialOrder { get; set; }
+        public double PichVariety => Events.OfType<Note>().GroupBy(note => note.Number).Count() / Events.OfType<Note>().Count();
         public double RestDensity => Events.OfType<Rest>().Count() / Events.Count();
     }
 }

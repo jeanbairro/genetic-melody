@@ -20,18 +20,22 @@ namespace GeneticMelody.Genetic.Domain
         private readonly IReplacementOperator _replacementOperator;
         private readonly ISelector _selector;
         private readonly IStoppingCriterionChecker _stopChecker;
-        public ICollection<Population> Generations { get; set; }
 
         public Solver(ICrossoverOperator crossoverOperator, ISimilarityFitnessCalculator fitnessCalculator, IInitializazer initializer, IReplacementOperator replacementOperator, ISelector selector, IStoppingCriterionChecker stopChecker)
         {
             _crossoverOperator = crossoverOperator;
+            _fitnessCalculator = fitnessCalculator;
             _initializer = initializer;
             _replacementOperator = replacementOperator;
             _selector = selector;
             _stopChecker = stopChecker;
+            Generations = new List<Population>();
         }
 
-        public MidiFile Solve()
+        public ICollection<Population> Generations { get; set; }
+        private Melody BestEver => Generations.SelectMany(g => g.Individuals).OrderByDescending(i => i.Fitness).First();
+
+        public Melody Solve()
         {
             var currentPopulation = _initializer.Initialize();
             /*aplicar operadores de mutação*/
@@ -46,7 +50,7 @@ namespace GeneticMelody.Genetic.Domain
                 currentPopulation = newPopulation;
             }
 
-            return new MidiFile();
+            return BestEver;
         }
     }
 }

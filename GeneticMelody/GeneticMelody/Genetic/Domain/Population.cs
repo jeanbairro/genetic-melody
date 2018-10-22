@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GeneticMelody.Genetic.Domain
 {
-    public class Population : ICloneable
+    public class Population
     {
         public Population()
         {
@@ -19,11 +19,6 @@ namespace GeneticMelody.Genetic.Domain
         public Melody BestIndividual()
         {
             return Individuals.OrderByDescending(i => i.Fitness).FirstOrDefault();
-        }
-
-        public object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 }
