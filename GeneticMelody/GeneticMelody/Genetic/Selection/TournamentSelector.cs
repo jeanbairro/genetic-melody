@@ -1,4 +1,5 @@
 ﻿using GeneticMelody.Genetic.Domain;
+using GeneticMelody.Genetic.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,13 @@ namespace GeneticMelody.Genetic.Selection
             var individuals = new List<Melody>();
             var indexes = new List<int>();
 
-            var randomizer = new Random();
             for (int i = 0; i < NumberOfSelections; i++)
             {
-                int index = randomizer.Next(Population.Limit);
+                int index = ThreadSafeRandom.ThisThreadsRandom.Next(Population.Limit);
 
                 while (indexes.Contains(index))
                 {
-                    index = randomizer.Next(Population.Limit);
+                    index = ThreadSafeRandom.ThisThreadsRandom.Next(Population.Limit);
                 }
 
                 indexes.Add(index);

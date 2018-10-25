@@ -1,6 +1,8 @@
 ﻿using GeneticMelody.Genetic.Crossover;
 using GeneticMelody.Genetic.Domain;
+using GeneticMelody.Genetic.Mutation.MeasureOperators;
 using GeneticMelody.Genetic.Selection;
+using System.Collections;
 using System.Linq;
 
 namespace GeneticMelody.Genetic.Replacement

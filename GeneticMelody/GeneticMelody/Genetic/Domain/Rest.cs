@@ -2,7 +2,7 @@
 {
     public class Rest : Event
     {
-        public Rest(int number) : base(number)
+        public Rest(int number, int order) : base(number, order)
         {
         }
     }

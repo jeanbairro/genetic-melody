@@ -1,4 +1,4 @@
-﻿namespace GeneticMelody.Genetic.Mutation
+﻿namespace GeneticMelody.Genetic.Mutation.MelodyOperators
 {
     public interface IMelodyMutationOperator
     {

@@ -48,17 +48,22 @@
     <Compile Include="Converter\MidiConverter.cs" />
     <Compile Include="Converter\RestOrPed.cs" />
     <Compile Include="Genetic\Crossover\ICrossoverOperator.cs" />
-    <Compile Include="Genetic\Crossover\RandomCutOffGeneticOperator.cs" />
+    <Compile Include="Genetic\Crossover\RandomCutOffCrossoverOperator.cs" />
     <Compile Include="Genetic\Domain\IIndividual.cs" />
     <Compile Include="Genetic\Domain\Solver.cs" />
     <Compile Include="Genetic\Initialization\IInitializer.cs" />
     <Compile Include="Genetic\Initialization\RandomInitializer.cs" />
-    <Compile Include="Genetic\Mutation\IMeasureMutationOperator.cs" />
-    <Compile Include="Genetic\Mutation\IMelodyMutationOperator.cs" />
+    <Compile Include="Genetic\Mutation\MeasureOperators\IMeasureMutationOperator.cs" />
+    <Compile Include="Genetic\Mutation\MeasureOperators\MeasureExchangeOperator.cs" />
+    <Compile Include="Genetic\Mutation\MeasureOperators\MeasureInversionOperator.cs" />
+    <Compile Include="Genetic\Mutation\MeasureOperators\MeasureReorganizationOperator.cs" />
+    <Compile Include="Genetic\Mutation\MeasureOperators\MeasureReplacementOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\IMelodyMutationOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\IMelodyReplacementOperator.cs" />
     <Compile Include="Genetic\Mutation\IMutationOperator.cs" />
-    <Compile Include="Genetic\Mutation\MelodicExchangeOperator.cs" />
-    <Compile Include="Genetic\Mutation\MelodicInversionOperator.cs" />
-    <Compile Include="Genetic\Mutation\MelodicReplacementOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\MelodicExchangeOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\MelodicInversionOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\MelodicReplacementOperator.cs" />
     <Compile Include="Genetic\Replacement\HalfReplacementOperator.cs" />
     <Compile Include="Genetic\Replacement\IReplacementOperator.cs" />
     <Compile Include="Genetic\Selection\ISelector.cs" />
@@ -77,6 +82,7 @@
     <Compile Include="Genetic\FitnessCalculators\ISimilarityFitnessCalculator.cs" />
     <Compile Include="Genetic\FitnessCalculators\MeasureSimilarityFitnessCalculator.cs" />
     <Compile Include="Genetic\FitnessCalculators\MelodySimilarityFitnessCalculator.cs" />
+    <Compile Include="Genetic\Util\ThreadSafeRandom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

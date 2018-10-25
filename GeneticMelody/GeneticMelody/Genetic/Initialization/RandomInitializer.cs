@@ -1,5 +1,6 @@
 ﻿using GeneticMelody.Converter;
 using GeneticMelody.Genetic.Domain;
+using GeneticMelody.Genetic.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,11 +49,10 @@ namespace GeneticMelody.Genetic.Initialization
                 .GroupBy(e => e.Number)
                 .ToList();
 
-            var randomizer = new Random();
             var indexOfevent = 0;
             while (events.Count < Measure.SizeOfMeasure)
             {
-                var index = randomizer.Next(differentEvents.Count);
+                var index = ThreadSafeRandom.ThisThreadsRandom.Next(differentEvents.Count);
                 var randomEvent = differentEvents[index].Key;
 
                 if (indexOfevent == 0 && randomEvent == (int)RestOrTie.Tie)
@@ -63,16 +63,16 @@ namespace GeneticMelody.Genetic.Initialization
                 switch (randomEvent)
                 {
                     case (int)RestOrTie.Rest:
-                        events.Add(new Rest(randomEvent));
+                        events.Add(new Rest(randomEvent, events.Count));
                         break;
 
                     case (int)RestOrTie.Tie:
-                        events.Add(new Tie(randomEvent));
+                        events.Add(new Tie(randomEvent, events.Count));
                         break;
 
                     default:
                         var note = new Melanchall.DryWetMidi.Smf.Interaction.Note((Melanchall.DryWetMidi.Common.SevenBitNumber)randomEvent);
-                        events.Add(new Note(note.NoteName.ToString(), randomEvent));
+                        events.Add(new Note(note.NoteName.ToString(), randomEvent, events.Count));
                         break;
                 }
 

@@ -2,7 +2,7 @@
 {
     public class Tie : Event
     {
-        public Tie(int number) : base(number)
+        public Tie(int number, int order) : base(number, order)
         {
         }
     }

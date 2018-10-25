@@ -50,11 +50,11 @@ namespace GeneticMelody.Converter
                 var notesEndRestsOfTime = notesAndRests.AtTime(ticks).ToList();
                 if (notesEndRestsOfTime.Any())
                 {
-                    measureEvent = LengthedToEvent(notesEndRestsOfTime.First());
+                    measureEvent = LengthedToEvent(notesEndRestsOfTime.First(), events.Count);
                 }
                 else
                 {
-                    measureEvent = new Tie((int)RestOrTie.Tie);
+                    measureEvent = new Tie((int)RestOrTie.Tie, events.Count);
                 }
 
                 events.Add(measureEvent);
@@ -64,14 +64,14 @@ namespace GeneticMelody.Converter
             return new Measure(events, measureOrder);
         }
 
-        private Event LengthedToEvent(ILengthedObject lengthed)
+        private Event LengthedToEvent(ILengthedObject lengthed, int order)
         {
             if (lengthed is Melanchall.DryWetMidi.Smf.Interaction.Note note)
             {
-                return new Genetic.Note(note.ToString(), note.NoteNumber);
+                return new Genetic.Note(note.ToString(), note.NoteNumber, order);
             }
 
-            return new Genetic.Rest((int)RestOrTie.Rest);
+            return new Genetic.Rest((int)RestOrTie.Rest, order);
         }
 
         public void Teste()

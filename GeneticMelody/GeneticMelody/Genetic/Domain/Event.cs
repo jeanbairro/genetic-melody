@@ -6,11 +6,13 @@
         {
         }
 
-        public Event(int number)
+        public Event(int number, int order)
         {
             Number = number;
+            Order = order;
         }
 
         public int Number { get; set; }
+        public int Order { get; set; }
     }
 }

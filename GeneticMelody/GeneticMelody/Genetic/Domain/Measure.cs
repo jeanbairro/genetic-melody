@@ -9,14 +9,14 @@ namespace GeneticMelody.Genetic
         public Measure(IList<Event> events, int order)
         {
             Events = events;
-            InitialOrder = order;
+            Order = order;
         }
 
         public static int SizeOfMeasure => GeneticMelodyConstants.SIZE_OF_MEASURE;
         public double DifferentIntervals => 0d;
         public IList<Event> Events { get; set; }
         public double NoteDensity => Events.OfType<Note>().Count() / Events.Count();
-        public int InitialOrder { get; set; }
+        public int Order { get; set; }
         public double PichVariety => Events.OfType<Note>().GroupBy(note => note.Number).Count() / Events.OfType<Note>().Count();
         public double RestDensity => Events.OfType<Rest>().Count() / Events.Count();
     }
