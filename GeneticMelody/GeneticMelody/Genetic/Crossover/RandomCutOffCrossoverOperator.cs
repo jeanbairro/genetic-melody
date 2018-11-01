@@ -23,17 +23,34 @@ namespace GeneticMelody.Genetic.Crossover
             var numberOfFirstTake = ThreadSafeRandom.ThisThreadsRandom.Next(measuresCount + 1);
             var firstMeasures = firstParent.Measures.Take(numberOfFirstTake).ToList();
             var secondMeasures = secondParent.Measures.Skip(numberOfFirstTake).Take(measuresCount - numberOfFirstTake).ToList();
+            var childMeasures = new List<Measure>();
+            childMeasures.AddRange(firstMeasures);
+            childMeasures.AddRange(secondMeasures);
 
-            firstMeasures.AddRange(secondMeasures);
-            foreach (var measure in firstMeasures)
+            for (var i = 0; i < childMeasures.Count; i++)
             {
-                _measureMutationOperators.ForEach(m => m.Mutate(measure));
+                _measureMutationOperators.ForEach(m => m.Mutate(childMeasures[i]));
+                childMeasures[i].Order = i;
             }
 
-            var melody = new Melody(firstMeasures, firstParent.TempoMap);
+            var melody = new Melody(childMeasures, null);
             _melodyMutationOperators.ForEach(m => m.Mutate(melody));
 
             return melody;
+        }
+
+        public bool TestarInconsistencia(Melody a)
+        {
+            var inconsistente = false;
+            for (int i = 0; i < a.Measures.Count; i++)
+            {
+                if (a.Measures[i].Order != i)
+                {
+                    inconsistente = true;
+                }
+            }
+
+            return inconsistente;
         }
     }
 }

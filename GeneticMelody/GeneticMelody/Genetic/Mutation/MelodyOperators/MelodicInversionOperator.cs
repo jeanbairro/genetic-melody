@@ -7,7 +7,7 @@ namespace GeneticMelody.Genetic.Mutation.MelodyOperators
 {
     public class MelodicInversionOperator : IMelodyMutationOperator, IMutationOperator
     {
-        public int Rate => GeneticMelodyConstants.DEFAULT_MUTATION_RATE;
+        public int Rate => GeneticMelodyConstants.MUTATION_RATE_MELODY_INVERSION;
 
         public void Mutate(Melody melody)
         {
@@ -16,12 +16,12 @@ namespace GeneticMelody.Genetic.Mutation.MelodyOperators
             if (randomRate < Rate)
             {
                 var measures = melody.Measures.OrderByDescending(m => m.Order).ToList();
-                var i = 0;
-                measures.ForEach(e =>
+                for (var i = 0; i < measures.Count; i++)
                 {
-                    e.Order = i++;
-                });
-                melody.Measures = measures;
+                    measures[i].Order = i;
+                }
+
+                melody.Measures = measures.ToList();
             }
         }
     }

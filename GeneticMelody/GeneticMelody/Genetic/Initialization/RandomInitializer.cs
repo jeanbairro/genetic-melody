@@ -18,7 +18,7 @@ namespace GeneticMelody.Genetic.Initialization
 
         public Population Initialize()
         {
-            var population = new Population();
+            var population = new Population(1);
 
             while (population.Individuals.Count < Population.Limit)
             {
@@ -35,17 +35,20 @@ namespace GeneticMelody.Genetic.Initialization
             var i = 0;
             while (measures.Count < BaseMelody.Measures.Count)
             {
-                measures.Add(new Measure(RandomizeEvents(), i));
+                measures.Add(GetNewMeasure(i));
                 i++;
             }
 
             return measures;
         }
 
-        private IList<Event> RandomizeEvents()
+        private Measure GetNewMeasure(int order)
         {
             var events = new List<Event>();
-            var differentEvents = BaseMelody.Measures.SelectMany(m => m.Events)
+            var differentEvents = BaseMelody
+                .Measures
+                .SelectMany(m => m.Events)
+                .Where(e => e is Note || e is Rest)
                 .GroupBy(e => e.Number)
                 .ToList();
 
@@ -55,31 +58,29 @@ namespace GeneticMelody.Genetic.Initialization
                 var index = ThreadSafeRandom.ThisThreadsRandom.Next(differentEvents.Count);
                 var randomEvent = differentEvents[index].Key;
 
-                if (indexOfevent == 0 && randomEvent == (int)RestOrTie.Tie)
+                if (BaseMelody.Measures[order].Events[index].Number == (int)RestOrTie.Tie)
                 {
-                    continue;
+                    events.Add(new Tie((int)RestOrTie.Tie, events.Count));
                 }
-
-                switch (randomEvent)
+                else
                 {
-                    case (int)RestOrTie.Rest:
-                        events.Add(new Rest(randomEvent, events.Count));
-                        break;
+                    switch (randomEvent)
+                    {
+                        case (int)RestOrTie.Rest:
+                            events.Add(new Rest(randomEvent, events.Count));
+                            break;
 
-                    case (int)RestOrTie.Tie:
-                        events.Add(new Tie(randomEvent, events.Count));
-                        break;
-
-                    default:
-                        var note = new Melanchall.DryWetMidi.Smf.Interaction.Note((Melanchall.DryWetMidi.Common.SevenBitNumber)randomEvent);
-                        events.Add(new Note(note.NoteName.ToString(), randomEvent, events.Count));
-                        break;
+                        default:
+                            var note = new Melanchall.DryWetMidi.Smf.Interaction.Note((Melanchall.DryWetMidi.Common.SevenBitNumber)randomEvent);
+                            events.Add(new Note(note.NoteName.ToString(), randomEvent, events.Count));
+                            break;
+                    }
                 }
 
                 indexOfevent++;
             }
 
-            return events;
+            return new Measure(events, order);
         }
     }
 }

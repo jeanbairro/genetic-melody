@@ -6,7 +6,7 @@ namespace GeneticMelody.Genetic.Mutation.MeasureOperators
 {
     public class MeasureReplacementOperator : IMeasureMutationOperator, IMutationOperator
     {
-        public int Rate => GeneticMelodyConstants.DEFAULT_MUTATION_RATE;
+        public int Rate => GeneticMelodyConstants.MUTATION_RATE_MEASURE_REPLACEMENT;
 
         public void Mutate(Measure measure)
         {

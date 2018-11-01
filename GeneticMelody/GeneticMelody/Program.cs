@@ -13,7 +13,6 @@ using Melanchall.DryWetMidi.Smf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace GeneticMelody
 {
@@ -21,8 +20,9 @@ namespace GeneticMelody
     {
         private static void Main(string[] args)
         {
+            var converter = new MidiConverter();
             var input = MidiFile.Read(@"Files\teste.mid");
-            var melody = new MidiConverter().MidiToMelody(input);
+            var melody = converter.MidiToMelody(input);
 
             Print(melody);
 
@@ -49,17 +49,21 @@ namespace GeneticMelody
             var output = geneticAlgorithm.Solve();
             Print(output);
 
+            var midi = converter.MelodyToMidi(output);
+            converter.SaveMidi(midi, @"Files\output.mid");
+
             Console.ReadKey();
         }
 
         private static void Print(Melody melody)
         {
-            Console.WriteLine($"Fitness: {melody.Fitness}");
+            Console.SetWindowSize(Console.LargestWindowWidth - 20, Console.LargestWindowHeight);
+            Console.Write($"Fitness: {melody.Fitness}\n\n");
             foreach (var measure in melody.Measures)
             {
-                Console.WriteLine($"Measure: {measure.Order}");
-                measure.Events.ToList().ForEach(e => Console.Write($"{e.Number} "));
-                Console.WriteLine("");
+                Console.Write($"Measure {measure.Order.ToString("00")}: ");
+                measure.Events.ToList().ForEach(e => Console.Write($"[{e.Order.ToString("00")} - {e.Number.ToString("000")}] "));
+                Console.Write("\n\n");
             }
             Console.WriteLine("---------------------------------------------------------");
         }

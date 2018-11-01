@@ -12,6 +12,10 @@ namespace GeneticMelody.Genetic
             Order = order;
         }
 
+        public Measure()
+        {
+        }
+
         public static int SizeOfMeasure => GeneticMelodyConstants.SIZE_OF_MEASURE;
         public double DifferentIntervals => 0d;
         public IList<Event> Events { get; set; }

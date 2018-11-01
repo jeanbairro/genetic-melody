@@ -20,15 +20,15 @@ namespace GeneticMelody.Genetic.Replacement
 
         public Population Replace(Population population)
         {
-            var newPopulation = new Population();
+            var newPopulation = new Population(population.Number + 1);
 
             while (newPopulation.Individuals.Count < Population.Limit)
             {
                 // Get individuals selected ordered desc by fitness
                 var selected = _selector.Select(population);
 
-                var firstParent = selected.ElementAt(0);
-                var secondParent = selected.ElementAt(1);
+                var firstParent = selected.ElementAt(0).Clone();
+                var secondParent = selected.ElementAt(1).Clone();
 
                 var firstChild = _crossoverOperator.Cross(firstParent, secondParent);
                 var secondChild = _crossoverOperator.Cross(secondParent, firstParent);

@@ -7,7 +7,7 @@ namespace GeneticMelody.Genetic.Mutation.MelodyOperators
 {
     public class MelodicExchangeOperator : IMelodyMutationOperator, IMutationOperator
     {
-        public int Rate => GeneticMelodyConstants.DEFAULT_MUTATION_RATE;
+        public int Rate => GeneticMelodyConstants.MUTATION_RATE_MELODY_EXCHANGE;
 
         public void Mutate(Melody melody)
         {
