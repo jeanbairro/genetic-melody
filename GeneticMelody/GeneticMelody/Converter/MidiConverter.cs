@@ -1,4 +1,6 @@
 ﻿using GeneticMelody.Genetic;
+using GeneticMelody.Genetic.Util;
+using GeneticMelody.Util;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.MusicTheory;
 using Melanchall.DryWetMidi.Smf;
@@ -18,7 +20,7 @@ namespace GeneticMelody.Converter
             var tempoMap = melody.TempoMap;
             var ticksPerQuarterNote = ((TicksPerQuarterNoteTimeDivision)tempoMap.TimeDivision).TicksPerQuarterNote;
             var numberOfBeats = tempoMap.TimeSignature.FirstOrDefault()?.Value.Numerator ?? TimeSignature.Default.Numerator;
-            var ticksPerEvent = ticksPerQuarterNote * numberOfBeats / Measure.SizeOfMeasure;
+            var ticksPerEvent = ticksPerQuarterNote * numberOfBeats / melody.SizeOfMeasure;
             var restTicks = 0;
             var tieTicks = 0;
             var events = new List<MidiEvent>
@@ -60,13 +62,14 @@ namespace GeneticMelody.Converter
             var tempoMap = midiFile.GetTempoMap();
             var ticksPerQuarterNote = ((TicksPerQuarterNoteTimeDivision)tempoMap.TimeDivision).TicksPerQuarterNote;
             var numberOfBeats = tempoMap.TimeSignature.FirstOrDefault()?.Value.Numerator ?? TimeSignature.Default.Numerator;
-            var ticksPerEvent = ticksPerQuarterNote * numberOfBeats / Measure.SizeOfMeasure;
+            var sizeOfMeasure = numberOfBeats * GeneticMelodyConstants.SLOTS_PER_BEAT;
+            var ticksPerEvent = ticksPerQuarterNote * numberOfBeats / sizeOfMeasure;
             var midiMeasures = SplitMidiInMeasures(midiFile);
 
             var measures = new List<Measure>();
             foreach (var midiMeasure in midiMeasures)
             {
-                measures.Add(MidiToMeasure(midiMeasure, measures.Count, ticksPerEvent));
+                measures.Add(MidiToMeasure(midiMeasure, measures.Count, ticksPerEvent, sizeOfMeasure));
             }
 
             return new Melody(measures, tempoMap.Clone());
@@ -114,40 +117,6 @@ namespace GeneticMelody.Converter
             midi.Write(path);
         }
 
-        public void Teste()
-        {
-            var midiFile = MidiFile.Read(@"Files\teste.mid");
-
-            var events = new List<ChannelEvent>();
-
-            var ticks = 95;
-            //for (int i = 0; i < 8; i++)
-            //{
-            //    events.Add(new NoteOnEvent { DeltaTime = ticks * i + i, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(48 + i), Velocity = (SevenBitNumber)127 });
-            //    events.Add(new NoteOffEvent { DeltaTime = ticks * (i + 1) + i, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(48 + i), Velocity = (SevenBitNumber)127 });
-            //}
-
-            events.Add(new NoteOnEvent { DeltaTime = 0, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(48), Velocity = (SevenBitNumber)127 });
-            events.Add(new NoteOffEvent { DeltaTime = 96, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(48), Velocity = (SevenBitNumber)127 });
-            events.Add(new NoteOnEvent { DeltaTime = 0, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(50), Velocity = (SevenBitNumber)127 });
-            events.Add(new NoteOffEvent { DeltaTime = 96, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(50), Velocity = (SevenBitNumber)127 });
-            //events.Add(new NoteOnEvent { DeltaTime = 192, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(52), Velocity = (SevenBitNumber)127 });
-            //events.Add(new NoteOffEvent { DeltaTime = 288, Channel = (FourBitNumber)0, NoteNumber = (SevenBitNumber)(52), Velocity = (SevenBitNumber)127 });
-
-            var chunk = new TrackChunk(events);
-            var midiFile2 = new MidiFile(new List<MidiChunk> { chunk });
-            midiFile2.Write($@"Files\midiFile2-teste-delta-time.mid");
-            var tempomap2 = midiFile2.GetTempoMap();
-
-            var tempoMap = midiFile.GetTempoMap();
-
-            var differentNotes = midiFile2.GetNotes().GroupBy(x => x.NoteName);
-
-            differentNotes.ToList().ForEach(n => Console.WriteLine(n.Key));
-
-            Print("file", midiFile2);
-        }
-
         private Event LengthedToEvent(ILengthedObject lengthed, int order)
         {
             if (lengthed is Melanchall.DryWetMidi.Smf.Interaction.Note note)
@@ -158,24 +127,34 @@ namespace GeneticMelody.Converter
             return new Genetic.Rest((int)RestOrTie.Rest, order);
         }
 
-        private Measure MidiToMeasure(MidiFile midiMeasure, int measureOrder, int ticksPerEvent)
+        private Measure MidiToMeasure(MidiFile midiMeasure, int measureOrder, int ticksPerEvent, int sizeOfMeasure)
         {
             var notesAndRests = midiMeasure.GetTrackChunks().Last().GetNotes().GetNotesAndRests(RestSeparationPolicy.NoSeparation);
-            var measureTotalTicks = ticksPerEvent * Measure.SizeOfMeasure;
+            var measureTotalTicks = ticksPerEvent * sizeOfMeasure;
             var ticks = 0;
 
             var events = new List<Event>();
+            ILengthedObject previous = null;
             while (ticks < measureTotalTicks)
             {
                 Event measureEvent = null;
-                var notesEndRestsOfTime = notesAndRests.AtTime(ticks).ToList();
+                var notesEndRestsOfTime = notesAndRests.PlayingAtTime(ticks);
                 if (notesEndRestsOfTime.Any())
                 {
-                    measureEvent = LengthedToEvent(notesEndRestsOfTime.First(), events.Count);
+                    var lengthed = notesEndRestsOfTime.First();
+                    if (!lengthed.Equal(previous))
+                    {
+                        measureEvent = LengthedToEvent(lengthed, events.Count);
+                        previous = lengthed;
+                    }
+                    else
+                    {
+                        measureEvent = new Tie((int)RestOrTie.Tie, events.Count);
+                    }
                 }
                 else
                 {
-                    measureEvent = new Tie((int)RestOrTie.Tie, events.Count);
+                    measureEvent = new Tie((int)RestOrTie.Rest, events.Count);
                 }
 
                 events.Add(measureEvent);

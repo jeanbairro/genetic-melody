@@ -33,24 +33,10 @@ namespace GeneticMelody.Genetic.Crossover
                 childMeasures[i].Order = i;
             }
 
-            var melody = new Melody(childMeasures, null);
+            var melody = new Melody(childMeasures, firstParent.TempoMap);
             _melodyMutationOperators.ForEach(m => m.Mutate(melody));
 
             return melody;
-        }
-
-        public bool TestarInconsistencia(Melody a)
-        {
-            var inconsistente = false;
-            for (int i = 0; i < a.Measures.Count; i++)
-            {
-                if (a.Measures[i].Order != i)
-                {
-                    inconsistente = true;
-                }
-            }
-
-            return inconsistente;
         }
     }
 }

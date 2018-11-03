@@ -49,6 +49,7 @@
     <Compile Include="Converter\RestOrPed.cs" />
     <Compile Include="Genetic\Crossover\ICrossoverOperator.cs" />
     <Compile Include="Genetic\Crossover\RandomCutOffCrossoverOperator.cs" />
+    <Compile Include="Genetic\Domain\GeneticEventsManager.cs" />
     <Compile Include="Genetic\Domain\IIndividual.cs" />
     <Compile Include="Genetic\Domain\Solver.cs" />
     <Compile Include="Genetic\Initialization\IInitializer.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Genetic\FitnessCalculators\ISimilarityFitnessCalculator.cs" />
     <Compile Include="Genetic\FitnessCalculators\MeasureSimilarityFitnessCalculator.cs" />
     <Compile Include="Genetic\FitnessCalculators\MelodySimilarityFitnessCalculator.cs" />
+    <Compile Include="Genetic\Util\Singleton.cs" />
     <Compile Include="Genetic\Util\ThreadSafeRandom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

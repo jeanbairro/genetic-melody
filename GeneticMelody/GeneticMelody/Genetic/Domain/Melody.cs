@@ -1,4 +1,5 @@
 ﻿using GeneticMelody.Genetic.Domain;
+using GeneticMelody.Util;
 using Melanchall.DryWetMidi.Smf.Interaction;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,12 @@ namespace GeneticMelody.Genetic
     {
         public Melody(IList<Measure> measures, TempoMap tempoMap)
         {
+            var numberOfBeats = tempoMap.TimeSignature.FirstOrDefault()?.Value.Numerator ?? TimeSignature.Default.Numerator;
+
             Identity = Guid.NewGuid();
             Measures = measures;
             TempoMap = tempoMap;
+            SizeOfMeasure = (numberOfBeats * GeneticMelodyConstants.SLOTS_PER_BEAT);
         }
 
         public Melody()
@@ -22,6 +26,7 @@ namespace GeneticMelody.Genetic
         public double Fitness { get; set; }
         public Guid Identity { get; set; }
         public IList<Measure> Measures { get; set; }
+        public int SizeOfMeasure { get; set; }
         public TempoMap TempoMap { get; set; }
 
         public Melody Clone()
@@ -39,6 +44,7 @@ namespace GeneticMelody.Genetic
                     }).ToList(),
                     Order = m.Order
                 }).ToList(),
+                SizeOfMeasure = this.SizeOfMeasure,
                 TempoMap = this.TempoMap
             };
         }

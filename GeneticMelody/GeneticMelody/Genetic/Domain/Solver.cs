@@ -7,6 +7,7 @@ using GeneticMelody.Genetic.Selection;
 using GeneticMelody.Genetic.StoppingCriterion;
 using GeneticMelody.Util;
 using Melanchall.DryWetMidi.Smf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,9 +39,11 @@ namespace GeneticMelody.Genetic.Domain
         public Melody Solve()
         {
             var currentPopulation = _initializer.Initialize();
-            /*aplicar operadores de mutação*/
             currentPopulation.Individuals.ToList().ForEach(currentMelody => _fitnessCalculator.Calculate(_initializer.BaseMelody, currentMelody));
             Generations.Add(currentPopulation);
+
+            Console.WriteLine($"AVG Fitness {currentPopulation.Number}: {currentPopulation.AverageFitness()}");
+            //Console.WriteLine($"BST Fitness {currentPopulation.Number}: {currentPopulation.BestIndividual().Fitness}");
 
             while (!_stopChecker.Stop(this))
             {
@@ -48,6 +51,8 @@ namespace GeneticMelody.Genetic.Domain
                 newPopulation.Individuals.ToList().ForEach(currentMelody => _fitnessCalculator.Calculate(_initializer.BaseMelody, currentMelody));
                 Generations.Add(newPopulation);
                 currentPopulation = newPopulation;
+                Console.WriteLine($"AVG Fitness {currentPopulation.Number}: {currentPopulation.AverageFitness()}");
+                //Console.WriteLine($"BST Fitness {currentPopulation.Number}: {currentPopulation.BestIndividual().Fitness}");
             }
 
             return BestEver;

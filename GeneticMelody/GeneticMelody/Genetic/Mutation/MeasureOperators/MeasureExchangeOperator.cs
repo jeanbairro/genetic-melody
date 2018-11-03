@@ -1,6 +1,5 @@
 ﻿using GeneticMelody.Genetic.Util;
 using GeneticMelody.Util;
-using System;
 using System.Linq;
 
 namespace GeneticMelody.Genetic.Mutation.MeasureOperators

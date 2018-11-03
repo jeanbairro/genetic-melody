@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Melanchall.DryWetMidi.Smf.Interaction;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GeneticMelody.Genetic.Util
 {
     public static class ExtensionMethods
     {
-        public static IList<T> Swap<T>(this IList<T> list, int indexA, int indexB)
+        public static ICollection<T> Swap<T>(this System.Collections.Generic.IList<T> list, int indexA, int indexB)
         {
             T tmp = list[indexA];
             list[indexA] = list[indexB];
@@ -12,7 +14,7 @@ namespace GeneticMelody.Genetic.Util
             return list;
         }
 
-        public static IList<T> Shuffle<T>(this IList<T> list)
+        public static ICollection<T> Shuffle<T>(this System.Collections.Generic.IList<T> list)
         {
             int n = list.Count;
             while (n > 1)
@@ -24,6 +26,16 @@ namespace GeneticMelody.Genetic.Util
                 list[n] = value;
             }
             return list;
+        }
+
+        public static IEnumerable<ILengthedObject> PlayingAtTime(this IEnumerable<ILengthedObject> list, long time)
+        {
+            return list.Where(e => time >= e.Time && time < (e.Time + e.Length));
+        }
+
+        public static bool Equal(this ILengthedObject obj, ILengthedObject objB)
+        {
+            return obj.Time == objB?.Time && obj.Length == objB?.Length && obj.GetType() == objB?.GetType();
         }
     }
 }

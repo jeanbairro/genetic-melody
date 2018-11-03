@@ -1,6 +1,7 @@
 ﻿using GeneticMelody.Genetic.Util;
 using GeneticMelody.Util;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GeneticMelody.Genetic.Mutation.MeasureOperators
@@ -15,13 +16,25 @@ namespace GeneticMelody.Genetic.Mutation.MeasureOperators
 
             if (randomRate < Rate)
             {
-                var events = measure.Events.OrderByDescending(m => m.Order).ToList();
-                var i = 0;
-                events.ForEach(e =>
+                var invertedNotes = measure.Events.OfType<Note>().OrderByDescending(m => m.Order).ToList();
+                var newEvents = new List<Event>();
+                var indexOfNotes = 0;
+                Event currentEvent;
+                for (int i = 0; i < measure.Events.Count; i++)
                 {
-                    e.Order = i++;
-                });
-                measure.Events = events;
+                    if (measure.Events[i] is Note)
+                    {
+                        currentEvent = invertedNotes.ElementAt(indexOfNotes);
+                        indexOfNotes++;
+                    }
+                    else
+                    {
+                        currentEvent = measure.Events[i];
+                    }
+
+                    currentEvent.Order = i;
+                    newEvents.Add(currentEvent);
+                }
             }
         }
     }

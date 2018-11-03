@@ -21,5 +21,7 @@ namespace GeneticMelody.Genetic.Domain
         {
             return Individuals.OrderByDescending(i => i.Fitness).FirstOrDefault();
         }
+
+        public double AverageFitness() => Individuals.Average(i => i.Fitness);
     }
 }
