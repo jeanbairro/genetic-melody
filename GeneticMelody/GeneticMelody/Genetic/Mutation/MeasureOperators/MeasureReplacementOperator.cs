@@ -19,17 +19,25 @@ namespace GeneticMelody.Genetic.Mutation.MeasureOperators
             if (randomRate < Rate)
             {
                 var geneticEventsManager = Singleton<GeneticEventsManager>.Instance();
-                var randomEvent = geneticEventsManager.RandomEvent();
+                var randomEvent = geneticEventsManager.RandomEventWithRate();
                 var index = ThreadSafeRandom.ThisThreadsRandom.Next(measure.Events.Count);
 
                 if (randomEvent == (int)RestOrTie.Rest)
                 {
+                    while (index + 1 < measure.Events.Count && measure.Events[index + 1].Number == (int)RestOrTie.Tie)
+                    {
+                        index = ThreadSafeRandom.ThisThreadsRandom.Next(measure.Events.Count);
+                    }
                     measure.Events[index] = new Rest(randomEvent, index);
                     return;
                 }
 
                 if (randomEvent == (int)RestOrTie.Tie)
                 {
+                    while (index == 0 || (index - 1 >= 0 && measure.Events[index - 1].Number == (int)RestOrTie.Rest))
+                    {
+                        index = ThreadSafeRandom.ThisThreadsRandom.Next(measure.Events.Count);
+                    }
                     measure.Events[index] = new Tie(randomEvent, index);
                     return;
                 }

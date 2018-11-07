@@ -52,9 +52,11 @@
     <Compile Include="Genetic\Domain\GeneticEventsManager.cs" />
     <Compile Include="Genetic\Domain\IIndividual.cs" />
     <Compile Include="Genetic\Domain\Solver.cs" />
+    <Compile Include="Genetic\Domain\TypeEventRate.cs" />
     <Compile Include="Genetic\Initialization\IInitializer.cs" />
     <Compile Include="Genetic\Initialization\RandomInitializer.cs" />
     <Compile Include="Genetic\Mutation\MeasureOperators\IMeasureMutationOperator.cs" />
+    <Compile Include="Genetic\Mutation\MeasureOperators\MeasureBrokerOperator.cs" />
     <Compile Include="Genetic\Mutation\MeasureOperators\MeasureExchangeOperator.cs" />
     <Compile Include="Genetic\Mutation\MeasureOperators\MeasureInversionOperator.cs" />
     <Compile Include="Genetic\Mutation\MeasureOperators\MeasureReorganizationOperator.cs" />

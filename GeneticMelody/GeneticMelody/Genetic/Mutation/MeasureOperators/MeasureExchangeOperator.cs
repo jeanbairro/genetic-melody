@@ -1,5 +1,8 @@
-﻿using GeneticMelody.Genetic.Util;
+﻿using GeneticMelody.Converter;
+using GeneticMelody.Genetic.Util;
 using GeneticMelody.Util;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GeneticMelody.Genetic.Mutation.MeasureOperators
@@ -17,8 +20,9 @@ namespace GeneticMelody.Genetic.Mutation.MeasureOperators
                 var indexA = ThreadSafeRandom.ThisThreadsRandom.Next(measure.Events.Count);
                 var indexB = ThreadSafeRandom.ThisThreadsRandom.Next(measure.Events.Count);
 
-                while (indexB == indexA)
+                while (indexB == indexA || !Valid(measure, indexA, indexB))
                 {
+                    indexA = ThreadSafeRandom.ThisThreadsRandom.Next(measure.Events.Count);
                     indexB = ThreadSafeRandom.ThisThreadsRandom.Next(measure.Events.Count);
                 }
 
@@ -29,6 +33,27 @@ namespace GeneticMelody.Genetic.Mutation.MeasureOperators
 
                 measure.Events = measure.Events.Swap(indexA, indexB).ToList();
             }
+        }
+
+        public bool Valid(Measure measure, int indexA, int indexB)
+        {
+            var events = measure.Events.ToList();
+            events = events.Swap(indexA, indexB).ToList();
+
+            for (int i = 0; i < events.Count; i++)
+            {
+                if (events[i].Number == (int)RestOrTie.Tie && i == 0)
+                {
+                    return false;
+                }
+
+                if (events[i].Number == (int)RestOrTie.Rest && i + 1 < events.Count && events[i + 1].Number == (int)RestOrTie.Tie)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

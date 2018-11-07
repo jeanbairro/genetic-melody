@@ -1,5 +1,4 @@
 ﻿using GeneticMelody.Util;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,11 +16,11 @@ namespace GeneticMelody.Genetic.Domain
         public ICollection<Melody> Individuals { get; set; }
         public int Number { get; set; }
 
+        public double AverageFitness() => Individuals.Average(i => i.Fitness);
+
         public Melody BestIndividual()
         {
             return Individuals.OrderByDescending(i => i.Fitness).FirstOrDefault();
         }
-
-        public double AverageFitness() => Individuals.Average(i => i.Fitness);
     }
 }

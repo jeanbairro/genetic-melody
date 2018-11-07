@@ -154,7 +154,7 @@ namespace GeneticMelody.Converter
                 }
                 else
                 {
-                    measureEvent = new Tie((int)RestOrTie.Rest, events.Count);
+                    measureEvent = new Genetic.Rest((int)RestOrTie.Rest, events.Count);
                 }
 
                 events.Add(measureEvent);

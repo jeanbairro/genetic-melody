@@ -1,6 +1,7 @@
 ﻿using GeneticMelody.Genetic.Mutation.MeasureOperators;
 using GeneticMelody.Genetic.Mutation.MelodyOperators;
 using GeneticMelody.Genetic.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 

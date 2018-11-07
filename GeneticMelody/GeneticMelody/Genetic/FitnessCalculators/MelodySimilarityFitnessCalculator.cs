@@ -26,11 +26,11 @@ namespace GeneticMelody.Genetic.FitnessCalculators
             var diffIntervalsSimilarity = CalculateDifference(originalDifferentIntervals, currentDifferentIntervals);
 
             currentMelody.Fitness =
-                (pitchVarietySimilarity) +
-                (noteDensitySimilarity) +
-                (restDensitySimilarity) +
-                (tieDensitySimilarity) +
-                (diffIntervalsSimilarity);
+                (pitchVarietySimilarity * 1) +
+                (noteDensitySimilarity * 1) +
+                (restDensitySimilarity * 1) +
+                (tieDensitySimilarity * 1) +
+                (diffIntervalsSimilarity * 1);
         }
 
         private double Divide(double a, double b)

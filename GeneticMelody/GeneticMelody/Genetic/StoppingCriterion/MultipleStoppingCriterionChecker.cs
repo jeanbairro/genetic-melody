@@ -9,7 +9,7 @@ namespace GeneticMelody.Genetic.StoppingCriterion
     {
         public bool Stop(Solver solver)
         {
-            if (solver.Generations.Last().BestIndividual().Fitness == GeneticMelodyConstants.GREAT_FITNESS) return true;
+            if (solver.Generations.Last().BestIndividual().Fitness >= GeneticMelodyConstants.GREAT_FITNESS) return true;
             if (solver.Generations.Count == GeneticMelodyConstants.GENERATIONS_LIMIT) return true;
 
             return false;

@@ -37,11 +37,7 @@ namespace GeneticMelody.Genetic
                 Identity = this.Identity,
                 Measures = this.Measures.Select(m => new Measure
                 {
-                    Events = m.Events.Select(e => new Event
-                    {
-                        Number = e.Number,
-                        Order = e.Order,
-                    }).ToList(),
+                    Events = m.Events.Select(e => e.Clone()).ToList(),
                     Order = m.Order
                 }).ToList(),
                 SizeOfMeasure = this.SizeOfMeasure,
