@@ -49,9 +49,10 @@
     <Compile Include="Converter\RestOrPed.cs" />
     <Compile Include="Genetic\Crossover\ICrossoverOperator.cs" />
     <Compile Include="Genetic\Crossover\RandomCutOffCrossoverOperator.cs" />
+    <Compile Include="Genetic\Domain\GeneticConfiguration.cs" />
     <Compile Include="Genetic\Domain\GeneticEventsManager.cs" />
     <Compile Include="Genetic\Domain\IIndividual.cs" />
-    <Compile Include="Genetic\Domain\Solver.cs" />
+    <Compile Include="Genetic\Domain\MelodyGenerator.cs" />
     <Compile Include="Genetic\Domain\TypeEventRate.cs" />
     <Compile Include="Genetic\Initialization\IInitializer.cs" />
     <Compile Include="Genetic\Initialization\RandomInitializer.cs" />
@@ -64,9 +65,9 @@
     <Compile Include="Genetic\Mutation\MelodyOperators\IMelodyMutationOperator.cs" />
     <Compile Include="Genetic\Mutation\MelodyOperators\IMelodyReplacementOperator.cs" />
     <Compile Include="Genetic\Mutation\IMutationOperator.cs" />
-    <Compile Include="Genetic\Mutation\MelodyOperators\MelodicExchangeOperator.cs" />
-    <Compile Include="Genetic\Mutation\MelodyOperators\MelodicInversionOperator.cs" />
-    <Compile Include="Genetic\Mutation\MelodyOperators\MelodicReplacementOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\MelodyExchangeOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\MelodyInversionOperator.cs" />
+    <Compile Include="Genetic\Mutation\MelodyOperators\MelodyReplacementOperator.cs" />
     <Compile Include="Genetic\Replacement\HalfReplacementOperator.cs" />
     <Compile Include="Genetic\Replacement\IReplacementOperator.cs" />
     <Compile Include="Genetic\Selection\ISelector.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Genetic\Util\ThreadSafeRandom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

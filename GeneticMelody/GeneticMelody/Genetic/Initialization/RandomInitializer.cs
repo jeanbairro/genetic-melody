@@ -25,7 +25,7 @@ namespace GeneticMelody.Genetic.Initialization
 
             while (population.Individuals.Count < Population.Limit)
             {
-                population.Individuals.Add(new Melody(GetMeasures(population.Individuals.Count), BaseMelody.TempoMap));
+                population.Individuals.Add(new Melody(GetMeasures(population.Individuals.Count), BaseMelody.TimeMap));
             }
 
             return population;

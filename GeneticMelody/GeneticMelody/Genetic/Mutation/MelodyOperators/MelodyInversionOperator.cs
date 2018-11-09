@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GeneticMelody.Genetic.Mutation.MelodyOperators
 {
-    public class MelodicInversionOperator : IMelodyMutationOperator, IMutationOperator
+    public class MelodyInversionOperator : IMelodyMutationOperator, IMutationOperator
     {
         public int Rate => GeneticMelodyConstants.MUTATION_RATE_MELODY_INVERSION;
 

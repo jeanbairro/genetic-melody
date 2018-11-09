@@ -7,10 +7,10 @@ namespace GeneticMelody.Genetic.StoppingCriterion
 {
     public class MultipleStoppingCriterionChecker : IStoppingCriterionChecker
     {
-        public bool Stop(Solver solver)
+        public bool Stop(MelodyGenerator melodyGenerator)
         {
-            if (solver.Generations.Last().BestIndividual().Fitness >= GeneticMelodyConstants.GREAT_FITNESS) return true;
-            if (solver.Generations.Count == GeneticMelodyConstants.GENERATIONS_LIMIT) return true;
+            if (melodyGenerator.Generations.Last().BestIndividual().Fitness >= GeneticMelodyConstants.GREAT_FITNESS) return true;
+            if (melodyGenerator.Generations.Count == GeneticMelodyConstants.GENERATIONS_LIMIT) return true;
 
             return false;
         }

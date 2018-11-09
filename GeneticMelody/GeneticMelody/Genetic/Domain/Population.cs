@@ -6,15 +6,15 @@ namespace GeneticMelody.Genetic.Domain
 {
     public class Population
     {
-        public Population(int number)
+        public Population(int sequence)
         {
             Individuals = new List<Melody>();
-            Number = number;
+            Sequence = sequence;
         }
 
         public static int Limit => GeneticMelodyConstants.POPULATION_LIMIT;
         public ICollection<Melody> Individuals { get; set; }
-        public int Number { get; set; }
+        public int Sequence { get; set; }
 
         public double AverageFitness() => Individuals.Average(i => i.Fitness);
 

@@ -37,8 +37,8 @@ namespace GeneticMelody
 
             var melodyMutationOperators = new List<IMelodyMutationOperator>
             {
-                new MelodicExchangeOperator(),
-                new MelodicInversionOperator(),
+                new MelodyExchangeOperator(),
+                new MelodyInversionOperator(),
             };
 
             var crossoverOperator = new RandomCutOffCrossoverOperator(measureMutationOperator, melodyMutationOperators);
@@ -47,12 +47,12 @@ namespace GeneticMelody
             var replacementOperator = new HalfReplacementOperator(crossoverOperator, selector);
             var fitnessCalculator = new MelodySimilarityFitnessCalculator();
             var stoppingCriterionChecker = new MultipleStoppingCriterionChecker();
-            var geneticAlgorithm = new Solver(crossoverOperator, fitnessCalculator, initializer, measureMutationOperator, melodyMutationOperators, replacementOperator, selector, stoppingCriterionChecker);
+            var geneticAlgorithm = new MelodyGenerator(crossoverOperator, fitnessCalculator, initializer, measureMutationOperator, melodyMutationOperators, replacementOperator, selector, stoppingCriterionChecker);
             var geneticEventsManager = Singleton<GeneticEventsManager>.Instance();
             geneticEventsManager.Set(input);
             // Test
             new List<Melody>() { input }.ForEach(currentMelody => fitnessCalculator.Calculate(input, currentMelody));
-            var output = geneticAlgorithm.Solve();
+            var output = geneticAlgorithm.Generate();
             var outputToSave = converter.MelodyToMidi(output);
             converter.SaveMidi(outputToSave, @"Files\output.mid");
 

@@ -17,7 +17,7 @@ namespace GeneticMelody.Converter
     {
         public MidiFile MelodyToMidi(Melody melody)
         {
-            var tempoMap = melody.TempoMap;
+            var tempoMap = melody.TimeMap;
             var ticksPerQuarterNote = ((TicksPerQuarterNoteTimeDivision)tempoMap.TimeDivision).TicksPerQuarterNote;
             var numberOfBeats = tempoMap.TimeSignature.FirstOrDefault()?.Value.Numerator ?? TimeSignature.Default.Numerator;
             var ticksPerEvent = ticksPerQuarterNote * numberOfBeats / melody.SizeOfMeasure;
@@ -53,7 +53,7 @@ namespace GeneticMelody.Converter
 
             var chunk = new TrackChunk(events);
             var midi = new MidiFile(new List<MidiChunk> { chunk });
-            midi.ReplaceTempoMap(melody.TempoMap);
+            midi.ReplaceTempoMap(melody.TimeMap);
             return midi;
         }
 

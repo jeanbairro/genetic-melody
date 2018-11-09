@@ -34,7 +34,7 @@ namespace GeneticMelody.Genetic.Crossover
                 childMeasures[i].Order = i;
             }
 
-            var melody = new Melody(childMeasures, firstParent.TempoMap);
+            var melody = new Melody(childMeasures, firstParent.TimeMap);
             _melodyMutationOperators.ForEach(m => m.Mutate(melody));
 
             return melody;

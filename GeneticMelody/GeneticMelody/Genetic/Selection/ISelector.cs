@@ -1,5 +1,4 @@
 ﻿using GeneticMelody.Genetic.Domain;
-using System;
 using System.Collections.Generic;
 
 namespace GeneticMelody.Genetic.Selection

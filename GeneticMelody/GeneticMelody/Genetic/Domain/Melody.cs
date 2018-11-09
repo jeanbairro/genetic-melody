@@ -15,7 +15,7 @@ namespace GeneticMelody.Genetic
 
             Identity = Guid.NewGuid();
             Measures = measures;
-            TempoMap = tempoMap;
+            TimeMap = tempoMap;
             SizeOfMeasure = (numberOfBeats * GeneticMelodyConstants.SLOTS_PER_BEAT);
         }
 
@@ -27,7 +27,7 @@ namespace GeneticMelody.Genetic
         public Guid Identity { get; set; }
         public IList<Measure> Measures { get; set; }
         public int SizeOfMeasure { get; set; }
-        public TempoMap TempoMap { get; set; }
+        public TempoMap TimeMap { get; set; }
 
         public Melody Clone()
         {
@@ -41,7 +41,7 @@ namespace GeneticMelody.Genetic
                     Order = m.Order
                 }).ToList(),
                 SizeOfMeasure = this.SizeOfMeasure,
-                TempoMap = this.TempoMap
+                TimeMap = this.TimeMap
             };
         }
     }

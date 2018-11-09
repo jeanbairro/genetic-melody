@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace GeneticMelody.Genetic.Domain
 {
-    public class Solver
+    public class MelodyGenerator
     {
         private readonly ICrossoverOperator _crossoverOperator;
         private readonly ISimilarityFitnessCalculator _fitnessCalculator;
@@ -25,8 +25,9 @@ namespace GeneticMelody.Genetic.Domain
         private readonly IReplacementOperator _replacementOperator;
         private readonly ISelector _selector;
         private readonly IStoppingCriterionChecker _stopChecker;
+        private readonly GeneticConfiguration _geneticConfiguration;
 
-        public Solver(ICrossoverOperator crossoverOperator, ISimilarityFitnessCalculator fitnessCalculator, IInitializazer initializer, List<IMeasureMutationOperator> measureMutationOperators, List<IMelodyMutationOperator> melodyMutationOperators, IReplacementOperator replacementOperator, ISelector selector, IStoppingCriterionChecker stopChecker)
+        public MelodyGenerator(ICrossoverOperator crossoverOperator, ISimilarityFitnessCalculator fitnessCalculator, IInitializazer initializer, List<IMeasureMutationOperator> measureMutationOperators, List<IMelodyMutationOperator> melodyMutationOperators, IReplacementOperator replacementOperator, ISelector selector, IStoppingCriterionChecker stopChecker)
         {
             _crossoverOperator = crossoverOperator;
             _fitnessCalculator = fitnessCalculator;
@@ -42,7 +43,7 @@ namespace GeneticMelody.Genetic.Domain
         public ICollection<Population> Generations { get; set; }
         private Melody BestEver => Generations.SelectMany(g => g.Individuals).OrderByDescending(i => i.Fitness).First();
 
-        public Melody Solve()
+        public Melody Generate()
         {
             var currentPopulation = _initializer.Initialize();
             ApplyMutationOperators(currentPopulation);
@@ -54,7 +55,7 @@ namespace GeneticMelody.Genetic.Domain
                 var newPopulation = _replacementOperator.Replace(currentPopulation);
                 newPopulation.Individuals.ToList().ForEach(currentMelody => _fitnessCalculator.Calculate(_initializer.BaseMelody, currentMelody));
                 var best = newPopulation.BestIndividual();
-                Print(best, newPopulation.Number.ToString());
+                Print(best, newPopulation.Sequence.ToString());
                 PrintFitnessValues(best);
 
                 Generations.Add(newPopulation);
@@ -134,15 +135,18 @@ namespace GeneticMelody.Genetic.Domain
         {
             if (number == (int)RestOrTie.Rest)
             {
-                return "PAUS";
+                //return "PAUS";
+                return "128";
             }
 
             if (number == (int)RestOrTie.Tie)
             {
-                return "SUST";
+                //return "SUST";
+                return "129";
             }
 
-            return NoteUtilities.GetNoteName((SevenBitNumber)number).ToString();
+            //return NoteUtilities.GetNoteName((SevenBitNumber)number).ToString();
+            return number.ToString();
         }
 
         private void PrintFitnessValues(Melody melody)

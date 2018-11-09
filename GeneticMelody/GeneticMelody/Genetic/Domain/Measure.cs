@@ -21,7 +21,6 @@ namespace GeneticMelody.Genetic
         public int Order { get; set; }
         public double PichVariety => Events.OfType<Note>().GroupBy(note => note.Number).Count() / Events.OfType<Note>().Count();
         public double RestDensity => Events.OfType<Rest>().Count() / Events.Count();
-        public int SizeOfMeasure { get; set; }
 
         public bool IsValid()
         {

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace GeneticMelody.Genetic.Mutation.MelodyOperators
 {
-    public class MelodicReplacementOperator : IMelodyReplacementOperator, IMutationOperator
+    public class MelodyReplacementOperator : IMelodyReplacementOperator, IMutationOperator
     {
         public int Rate => GeneticMelodyConstants.MUTATION_RATE_MELODY_REPLACEMENT;
 

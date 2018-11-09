@@ -20,7 +20,7 @@ namespace GeneticMelody.Genetic.Replacement
 
         public Population Replace(Population population)
         {
-            var newPopulation = new Population(population.Number + 1);
+            var newPopulation = new Population(population.Sequence + 1);
 
             while (newPopulation.Individuals.Count < Population.Limit)
             {
