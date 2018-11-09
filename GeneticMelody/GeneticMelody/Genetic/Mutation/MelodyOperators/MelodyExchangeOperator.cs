@@ -1,13 +1,16 @@
 ﻿using GeneticMelody.Genetic.Util;
-using GeneticMelody.Util;
-using System;
 using System.Linq;
 
 namespace GeneticMelody.Genetic.Mutation.MelodyOperators
 {
     public class MelodyExchangeOperator : IMelodyMutationOperator, IMutationOperator
     {
-        public int Rate => GeneticMelodyConstants.MUTATION_RATE_MELODY_EXCHANGE;
+        public MelodyExchangeOperator(int rate)
+        {
+            Rate = rate;
+        }
+
+        public int Rate { get; set; }
 
         public void Mutate(Melody melody)
         {

@@ -19,11 +19,11 @@ namespace GeneticMelody.Genetic.Initialization
 
         public Melody BaseMelody { get; set; }
 
-        public Population Initialize()
+        public Population Initialize(GeneticConfiguration configuration)
         {
-            var population = new Population(1);
+            var population = new Population(1, configuration);
 
-            while (population.Individuals.Count < Population.Limit)
+            while (population.Individuals.Count < configuration.PopulationLimit)
             {
                 population.Individuals.Add(new Melody(GetMeasures(population.Individuals.Count), BaseMelody.TimeMap));
             }

@@ -10,7 +10,12 @@ namespace GeneticMelody.Genetic.Mutation.MeasureOperators
 {
     public class MeasureBrokerOperator : IMeasureMutationOperator, IMutationOperator
     {
-        public int Rate => GeneticMelodyConstants.MUTATION_RATE_MEASURE_BROKER;
+        public MeasureBrokerOperator(int rate)
+        {
+            Rate = rate;
+        }
+
+        public int Rate { get; set; }
 
         public void Mutate(Measure measure)
         {

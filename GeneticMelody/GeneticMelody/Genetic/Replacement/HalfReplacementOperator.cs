@@ -9,20 +9,22 @@ namespace GeneticMelody.Genetic.Replacement
 {
     public class HalfReplacementOperator : IReplacementOperator
     {
+        private readonly GeneticConfiguration _configuration;
         private readonly ICrossoverOperator _crossoverOperator;
         private readonly ISelector _selector;
 
-        public HalfReplacementOperator(ICrossoverOperator crossoverOperator, ISelector selector)
+        public HalfReplacementOperator(ICrossoverOperator crossoverOperator, ISelector selector, GeneticConfiguration configuration)
         {
             _crossoverOperator = crossoverOperator;
             _selector = selector;
+            _configuration = configuration;
         }
 
         public Population Replace(Population population)
         {
-            var newPopulation = new Population(population.Sequence + 1);
+            var newPopulation = new Population(population.Sequence + 1, _configuration);
 
-            while (newPopulation.Individuals.Count < Population.Limit)
+            while (newPopulation.Individuals.Count < newPopulation.Limit)
             {
                 // Get individuals selected ordered desc by fitness
                 var selected = _selector.Select(population);

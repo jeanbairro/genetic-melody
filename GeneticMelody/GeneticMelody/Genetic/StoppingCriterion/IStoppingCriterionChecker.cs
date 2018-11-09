@@ -4,6 +4,6 @@ namespace GeneticMelody.Genetic.StoppingCriterion
 {
     public interface IStoppingCriterionChecker
     {
-        bool Stop(MelodyGenerator solver);
+        bool Stop(MelodyGenerator solver, GeneticConfiguration configuration);
     }
 }

@@ -90,7 +90,7 @@
     <Compile Include="Genetic\Util\ThreadSafeRandom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\Test.cs" />
+    <Compile Include="Test\HeristicTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -100,6 +100,8 @@
     <Content Include="Files\Parabéns a Você.mid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\MutationRate.txt" />
+    <Content Include="Files\PopSize.txt" />
     <Content Include="Files\teste.mid">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

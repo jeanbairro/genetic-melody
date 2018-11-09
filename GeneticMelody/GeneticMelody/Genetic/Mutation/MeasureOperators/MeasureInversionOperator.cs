@@ -1,5 +1,4 @@
 ﻿using GeneticMelody.Genetic.Util;
-using GeneticMelody.Util;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +6,12 @@ namespace GeneticMelody.Genetic.Mutation.MeasureOperators
 {
     public class MeasureInversionOperator : IMeasureMutationOperator, IMutationOperator
     {
-        public int Rate => GeneticMelodyConstants.MUTATION_RATE_MEASURE_INVERSION;
+        public MeasureInversionOperator(int rate)
+        {
+            Rate = rate;
+        }
+
+        public int Rate { get; set; }
 
         public void Mutate(Measure measure)
         {

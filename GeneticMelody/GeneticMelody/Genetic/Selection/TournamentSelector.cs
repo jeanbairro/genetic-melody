@@ -16,11 +16,11 @@ namespace GeneticMelody.Genetic.Selection
 
             for (int i = 0; i < NumberOfSelections; i++)
             {
-                int index = ThreadSafeRandom.ThisThreadsRandom.Next(Population.Limit);
+                int index = ThreadSafeRandom.ThisThreadsRandom.Next(population.Limit);
 
                 while (indexes.Contains(index))
                 {
-                    index = ThreadSafeRandom.ThisThreadsRandom.Next(Population.Limit);
+                    index = ThreadSafeRandom.ThisThreadsRandom.Next(population.Limit);
                 }
 
                 indexes.Add(index);

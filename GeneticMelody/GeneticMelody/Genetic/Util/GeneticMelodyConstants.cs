@@ -4,6 +4,7 @@
     {
         public const int GENERATIONS_LIMIT = 100;
         public const double GREAT_FITNESS = 5;
+        public const int MUTATION_RATE = 10;
         public const int MUTATION_RATE_MEASURE_BROKER = -1;
         public const int MUTATION_RATE_MEASURE_EXCHANGE = 10;
         public const int MUTATION_RATE_MEASURE_INVERSION = 10;

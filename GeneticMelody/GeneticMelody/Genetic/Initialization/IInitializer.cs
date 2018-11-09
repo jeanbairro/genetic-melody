@@ -6,6 +6,6 @@ namespace GeneticMelody.Genetic.Initialization
     {
         Melody BaseMelody { get; set; }
 
-        Population Initialize();
+        Population Initialize(GeneticConfiguration configuration);
     }
 }

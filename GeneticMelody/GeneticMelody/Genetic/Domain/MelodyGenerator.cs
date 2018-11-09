@@ -27,10 +27,11 @@ namespace GeneticMelody.Genetic.Domain
         private readonly IStoppingCriterionChecker _stopChecker;
         private readonly GeneticConfiguration _geneticConfiguration;
 
-        public MelodyGenerator(ICrossoverOperator crossoverOperator, ISimilarityFitnessCalculator fitnessCalculator, IInitializazer initializer, List<IMeasureMutationOperator> measureMutationOperators, List<IMelodyMutationOperator> melodyMutationOperators, IReplacementOperator replacementOperator, ISelector selector, IStoppingCriterionChecker stopChecker)
+        public MelodyGenerator(ICrossoverOperator crossoverOperator, ISimilarityFitnessCalculator fitnessCalculator, IInitializazer initializer, List<IMeasureMutationOperator> measureMutationOperators, List<IMelodyMutationOperator> melodyMutationOperators, IReplacementOperator replacementOperator, ISelector selector, IStoppingCriterionChecker stopChecker, GeneticConfiguration geneticConfiguration)
         {
             _crossoverOperator = crossoverOperator;
             _fitnessCalculator = fitnessCalculator;
+            _geneticConfiguration = geneticConfiguration;
             _initializer = initializer;
             _measureMutationOperators = measureMutationOperators;
             _melodyMutationOperators = melodyMutationOperators;
@@ -45,28 +46,28 @@ namespace GeneticMelody.Genetic.Domain
 
         public Melody Generate()
         {
-            var currentPopulation = _initializer.Initialize();
+            var currentPopulation = _initializer.Initialize(_geneticConfiguration);
             ApplyMutationOperators(currentPopulation);
             currentPopulation.Individuals.ToList().ForEach(currentMelody => _fitnessCalculator.Calculate(_initializer.BaseMelody, currentMelody));
             Generations.Add(currentPopulation);
 
-            while (!_stopChecker.Stop(this))
+            while (!_stopChecker.Stop(this, _geneticConfiguration))
             {
                 var newPopulation = _replacementOperator.Replace(currentPopulation);
                 newPopulation.Individuals.ToList().ForEach(currentMelody => _fitnessCalculator.Calculate(_initializer.BaseMelody, currentMelody));
                 var best = newPopulation.BestIndividual();
-                Print(best, newPopulation.Sequence.ToString());
-                PrintFitnessValues(best);
+                //Print(best, newPopulation.Sequence.ToString());
+                //PrintFitnessValues(best);
 
                 Generations.Add(newPopulation);
                 currentPopulation = newPopulation;
             }
 
-            Print(_initializer.BaseMelody, "input");
-            PrintFitnessValues(_initializer.BaseMelody);
+            //Print(_initializer.BaseMelody, "input");
+            //PrintFitnessValues(_initializer.BaseMelody);
 
-            Print(BestEver, "output");
-            PrintFitnessValues(BestEver);
+            //Print(BestEver, "output");
+            //PrintFitnessValues(BestEver);
 
             return BestEver;
         }
