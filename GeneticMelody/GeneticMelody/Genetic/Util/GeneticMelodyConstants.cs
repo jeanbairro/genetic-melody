@@ -12,7 +12,7 @@
         public const int MUTATION_RATE_MELODY_EXCHANGE = 10;
         public const int MUTATION_RATE_MELODY_INVERSION = 10;
         public const int MUTATION_RATE_MELODY_REPLACEMENT = 10;
-        public const int POPULATION_COUNT_WITH_ORIGINAl_TIES = 0;
+        public const int POPULATION_COUNT_WITH_ORIGINAl_TIES = 5;
         public const int POPULATION_LIMIT = 50;
         public const int SLOTS_PER_BEAT = 8;
     }
