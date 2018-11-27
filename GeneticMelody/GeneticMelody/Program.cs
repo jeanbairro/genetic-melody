@@ -21,7 +21,7 @@ namespace GeneticMelody
         private static void Main(string[] args)
         {
             var converter = new MidiConverter();
-            var midi = MidiFile.Read(@"Files\Parabéns a Você.mid");
+            var midi = MidiFile.Read(@"Files\hey-jude.mid");
             var input = converter.MidiToMelody(midi);
             var inputToSave = converter.MelodyToMidi(input);
             converter.SaveMidi(inputToSave, @"Files\input.mid");

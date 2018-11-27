@@ -129,7 +129,7 @@ namespace GeneticMelody.Converter
 
         private Measure MidiToMeasure(MidiFile midiMeasure, int measureOrder, int ticksPerEvent, int sizeOfMeasure)
         {
-            var notesAndRests = midiMeasure.GetTrackChunks().Last().GetNotes().GetNotesAndRests(RestSeparationPolicy.NoSeparation);
+            var notesAndRests = midiMeasure.GetTrackChunks().Last().GetNotes().GetNotesAndRests(RestSeparationPolicy.NoSeparation).ToList();
             var measureTotalTicks = ticksPerEvent * sizeOfMeasure;
             var ticks = 0;
 
@@ -142,7 +142,8 @@ namespace GeneticMelody.Converter
                 if (notesEndRestsOfTime.Any())
                 {
                     var lengthed = notesEndRestsOfTime.First();
-                    if (!lengthed.Equal(previous))
+
+                    if (lengthed is Melanchall.DryWetMidi.Smf.Interaction.Rest || !lengthed.Equal(previous))
                     {
                         measureEvent = LengthedToEvent(lengthed, events.Count);
                         previous = lengthed;
